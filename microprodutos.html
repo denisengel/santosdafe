@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novenas Individuais – Santos da Fé</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A84C;--gold-l:#E8D5A0;--gold-d:#8B6914;--navy:#0D1630;--deep:#1A2744;--mid:#2D3F6B;--cream:#FDF8EE;--parch:#F7F1E3;--ink:#1A1208;--muted:#6B5E3E}
+body{font-family:'Crimson Pro',serif;background:var(--cream);color:var(--ink)}
+.produtos-hero{background:var(--navy);padding:60px 24px;text-align:center}
+.produtos-hero h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,42px);color:var(--gold);letter-spacing:2px;margin-bottom:12px}
+.produtos-hero p{color:rgba(255,255,255,.7);font-size:16px;font-style:italic}
+.produtos-grid{max-width:1100px;margin:0 auto;padding:60px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px}
+
+/* CARD PRODUTO */
+.prod-card{background:white;border-radius:24px;overflow:hidden;border:1.5px solid rgba(201,168,76,.2)}
+.prod-header{padding:36px 28px;text-align:center;position:relative}
+.prod-emoji{font-size:48px;display:block;margin-bottom:12px}
+.prod-name{font-family:'Cinzel',serif;font-size:20px;letter-spacing:1px;margin-bottom:6px}
+.prod-saint{font-size:14px;font-style:italic;opacity:.8}
+.prod-body{padding:0 28px 28px}
+.prod-desc{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:20px;padding-top:20px;border-top:1px solid rgba(201,168,76,.15)}
+.prod-days{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.prod-day{background:var(--parch);border-radius:10px;padding:10px;font-size:12px;color:var(--muted);border-left:2px solid var(--gold)}
+.prod-day strong{display:block;font-family:'Cinzel',serif;font-size:11px;color:var(--gold-d);letter-spacing:.5px;margin-bottom:2px}
+.prod-price-area{text-align:center;background:var(--parch);border-radius:16px;padding:20px;margin-bottom:16px}
+.prod-old{font-size:14px;color:var(--muted);text-decoration:line-through}
+.prod-price{font-family:'Cinzel',serif;font-size:38px;color:var(--deep);font-weight:700}
+.prod-period{font-size:13px;color:var(--muted)}
+.prod-bonus{font-size:12px;color:var(--gold-d);margin-top:6px;font-style:italic}
+.prod-cta{display:block;width:100%;padding:16px;text-align:center;font-family:'Cinzel',serif;font-size:14px;letter-spacing:2px;border:none;border-radius:14px;cursor:pointer;text-decoration:none;transition:all .2s}
+.prod-includes{list-style:none;margin-bottom:20px}
+.prod-includes li{font-size:13px;color:var(--ink);padding:6px 0;border-bottom:1px solid rgba(201,168,76,.1);display:flex;gap:7px}
+.prod-includes li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0}
+
+/* CORES POR TEMA */
+.card-jose .prod-header{background:linear-gradient(135deg,#1A2744,#2D3F6B);color:var(--gold-l)}
+.card-jose .prod-name{color:var(--gold)}
+.card-jose .prod-cta{background:var(--gold);color:var(--navy)}
+.card-jose .prod-cta:hover{background:var(--gold-l)}
+
+.card-rita .prod-header{background:linear-gradient(135deg,#4A1020,#7B1535);color:#F4C0D1}
+.card-rita .prod-name{color:#F4C0D1}
+.card-rita .prod-cta{background:#993556;color:white}
+.card-rita .prod-cta:hover{background:#7B1535}
+
+.card-judas .prod-header{background:linear-gradient(135deg,#0A2A0A,#1A4A1A);color:#A8E6A8}
+.card-judas .prod-name{color:#A8E6A8}
+.card-judas .prod-cta{background:#3B6D11;color:white}
+.card-judas .prod-cta:hover{background:#27500A}
+
+.card-bento .prod-header{background:linear-gradient(135deg,#1A1A2E,#16213E);color:#B5D4F4}
+.card-bento .prod-name{color:#B5D4F4}
+.card-bento .prod-cta{background:#185FA5;color:white}
+.card-bento .prod-cta:hover{background:#0C447C}
+
+/* UPSELL */
+.upsell-section{background:var(--deep);padding:60px 24px;text-align:center}
+.upsell-section h2{font-family:'Cinzel',serif;font-size:28px;color:var(--gold);margin-bottom:12px}
+.upsell-section p{color:rgba(255,255,255,.7);font-size:16px;max-width:560px;margin:0 auto 32px;font-style:italic;line-height:1.6}
+.upsell-box{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:24px;padding:40px;max-width:560px;margin:0 auto}
+.upsell-price{font-family:'Cinzel',serif;font-size:48px;color:var(--gold)}
+.upsell-period{font-size:16px;color:rgba(255,255,255,.6);margin-bottom:24px}
+.btn-upsell{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:15px;letter-spacing:2px;padding:18px 48px;border-radius:50px;text-decoration:none;transition:all .2s}
+.btn-upsell:hover{background:var(--gold-l);transform:translateY(-2px)}
+</style>
+</head>
+<body>
+
+<div class="produtos-hero">
+  <h1>Novenas Individuais</h1>
+  <p>Escolha a causa do seu coração e receba uma jornada espiritual completa de 9 dias</p>
+</div>
+
+<div class="produtos-grid">
+
+  <!-- SÃO JOSÉ -->
+  <div class="prod-card card-jose">
+    <div class="prod-header">
+      <span class="prod-emoji">💰</span>
+      <div class="prod-name">Novena de São José</div>
+      <div class="prod-saint">Para Prosperidade e Trabalho</div>
+    </div>
+    <div class="prod-body">
+      <p class="prod-desc">9 dias de jornada espiritual profunda guiada por São José — patrono dos trabalhadores, dos pais de família e de todos que buscam providência divina na sua vida financeira.</p>
+      <div class="prod-days">
+        <div class="prod-day"><strong>Dia 1</strong>O Homem Justo</div>
+        <div class="prod-day"><strong>Dia 2</strong>O Discernimento</div>
+        <div class="prod-day"><strong>Dia 3</strong>A Fuga ao Egito</div>
+        <div class="prod-day"><strong>Dia 4</strong>O Mestre de Ofício</div>
+        <div class="prod-day"><strong>Dia 5</strong>Nazaré Sagrada</div>
+        <div class="prod-day"><strong>Dia 6</strong>A Boa Morte</div>
+        <div class="prod-day"><strong>Dia 7</strong>Santa Teresa</div>
+        <div class="prod-day"><strong>Dia 8</strong>O Operário</div>
+      </div>
+      <ul class="prod-includes">
+        <li>9 histórias do santo (conteúdo original)</li>
+        <li>9 orações personalizadas por dia</li>
+        <li>9 propósitos práticos diários</li>
+        <li>9 reflexões transformadoras</li>
+        <li>Acesso vitalício após a compra</li>
+        <li>Progresso e méritos espirituais</li>
+      </ul>
+      <div class="prod-price-area">
+        <div class="prod-old">de R$19,90</div>
+        <div class="prod-price">R$9,90</div>
+        <div class="prod-period">pagamento único · acesso vitalício</div>
+        <div class="prod-bonus">🎁 Bônus: Oração de Consagração a São José</div>
+      </div>
+      <a href="#" class="prod-cta">Começar Novena de São José →</a>
+    </div>
+  </div>
+
+  <!-- SANTA RITA -->
+  <div class="prod-card card-rita">
+    <div class="prod-header">
+      <span class="prod-emoji">❤️</span>
+      <div class="prod-name">Novena de Santa Rita</div>
+      <div class="prod-saint">Para Amor, Família e Causas Impossíveis</div>
+    </div>
+    <div class="prod-body">
+      <p class="prod-desc">9 dias com Santa Rita de Cássia — a advogada das causas impossíveis. Para casamentos em crise, reconciliações, lares em conflito e amor que parece ter chegado ao fim.</p>
+      <div class="prod-days">
+        <div class="prod-day"><strong>Dia 1</strong>O Amor que Não Desiste</div>
+        <div class="prod-day"><strong>Dia 2</strong>O Amor que Salva</div>
+        <div class="prod-day"><strong>Dia 3</strong>As Portas Fechadas</div>
+        <div class="prod-day"><strong>Dia 4</strong>O Espinho Sagrado</div>
+        <div class="prod-day"><strong>Dia 5</strong>A Causa Impossível</div>
+        <div class="prod-day"><strong>Dia 6</strong>A Rosa de Inverno</div>
+        <div class="prod-day"><strong>Dia 7</strong>A Santa Eucaristia</div>
+        <div class="prod-day"><strong>Dia 8</strong>A Canonização</div>
+      </div>
+      <ul class="prod-includes">
+        <li>9 histórias de Santa Rita</li>
+        <li>9 orações para amor e família</li>
+        <li>Ritual da Rosa de Santa Rita</li>
+        <li>Oração de consagração do lar</li>
+        <li>Acesso vitalício após a compra</li>
+        <li>Comunidade de oração incluída</li>
+      </ul>
+      <div class="prod-price-area">
+        <div class="prod-old">de R$19,90</div>
+        <div class="prod-price">R$9,90</div>
+        <div class="prod-period">pagamento único · acesso vitalício</div>
+        <div class="prod-bonus">🌹 Bônus: Rito da Rosa de Santa Rita</div>
+      </div>
+      <a href="#" class="prod-cta">Começar Novena de Santa Rita →</a>
+    </div>
+  </div>
+
+  <!-- SÃO JUDAS -->
+  <div class="prod-card card-judas">
+    <div class="prod-header">
+      <span class="prod-emoji">🙏</span>
+      <div class="prod-name">Novena de São Judas Tadeu</div>
+      <div class="prod-saint">Para Causas Desesperadas</div>
+    </div>
+    <div class="prod-body">
+      <p class="prod-desc">9 dias com São Judas Tadeu — o apóstolo dos desesperados. Para quando todas as saídas humanas se fecharam e só resta a fé. O santo dos que chegaram ao limite.</p>
+      <div class="prod-days">
+        <div class="prod-day"><strong>Dia 1</strong>O Esquecido</div>
+        <div class="prod-day"><strong>Dia 2</strong>A Pergunta Corajosa</div>
+        <div class="prod-day"><strong>Dia 3</strong>O Mártir da Fé</div>
+        <div class="prod-day"><strong>Dia 4</strong>A Grande Depressão</div>
+        <div class="prod-day"><strong>Dia 5</strong>A Fé Autêntica</div>
+        <div class="prod-day"><strong>Dia 6</strong>A Corrente de Fé</div>
+        <div class="prod-day"><strong>Dia 7</strong>O Rosto de Cristo</div>
+        <div class="prod-day"><strong>Dia 8</strong>O Exaltado</div>
+      </div>
+      <ul class="prod-includes">
+        <li>9 histórias do apóstolo esquecido</li>
+        <li>9 orações para causas impossíveis</li>
+        <li>Oração de emergência espiritual</li>
+        <li>Carta de fé pessoal ao santo</li>
+        <li>Acesso vitalício após a compra</li>
+        <li>Meditações para momentos de crise</li>
+      </ul>
+      <div class="prod-price-area">
+        <div class="prod-old">de R$19,90</div>
+        <div class="prod-price">R$9,90</div>
+        <div class="prod-period">pagamento único · acesso vitalício</div>
+        <div class="prod-bonus">🕯️ Bônus: Oração de Emergência Espiritual</div>
+      </div>
+      <a href="#" class="prod-cta">Começar Novena de São Judas →</a>
+    </div>
+  </div>
+
+  <!-- SÃO BENTO -->
+  <div class="prod-card card-bento">
+    <div class="prod-header">
+      <span class="prod-emoji">🛡️</span>
+      <div class="prod-name">Novena de São Bento</div>
+      <div class="prod-saint">Para Proteção Espiritual</div>
+    </div>
+    <div class="prod-body">
+      <p class="prod-desc">9 dias com São Bento — o guardião da Cruz contra todo o mal. Para proteção da família, bênção do lar, afastamento de influências negativas e paz espiritual.</p>
+      <div class="prod-days">
+        <div class="prod-day"><strong>Dia 1</strong>O Eremita</div>
+        <div class="prod-day"><strong>Dia 2</strong>Ora et Labora</div>
+        <div class="prod-day"><strong>Dia 3</strong>O Veneno Destruído</div>
+        <div class="prod-day"><strong>Dia 4</strong>A Medalha Sagrada</div>
+        <div class="prod-day"><strong>Dia 5</strong>A Regra de Bento</div>
+        <div class="prod-day"><strong>Dia 6</strong>Monte Cassino</div>
+        <div class="prod-day"><strong>Dia 7</strong>Escolástica</div>
+        <div class="prod-day"><strong>Dia 8</strong>A Morte Santa</div>
+      </div>
+      <ul class="prod-includes">
+        <li>9 histórias do guardião da Cruz</li>
+        <li>9 orações de proteção espiritual</li>
+        <li>Rito de bênção da casa</li>
+        <li>Oração da Medalha de São Bento</li>
+        <li>Acesso vitalício após a compra</li>
+        <li>Guia da Medalha de São Bento</li>
+      </ul>
+      <div class="prod-price-area">
+        <div class="prod-old">de R$19,90</div>
+        <div class="prod-price">R$9,90</div>
+        <div class="prod-period">pagamento único · acesso vitalício</div>
+        <div class="prod-bonus">🏰 Bônus: Rito de Bênção da Casa</div>
+      </div>
+      <a href="#" class="prod-cta">Começar Novena de São Bento →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- UPSELL PARA CLUBE -->
+<div class="upsell-section">
+  <h2>Quer acesso a todas as 7 novenas?</h2>
+  <p>O Clube Santos da Fé dá acesso completo: todas as novenas, Conselheiro IA, biblioteca de orações, calendário litúrgico e comunidade.</p>
+  <div class="upsell-box">
+    <div class="upsell-price">R$14,90</div>
+    <div class="upsell-period">/mês · Cancele quando quiser</div>
+    <a href="landing-page.html#precos" class="btn-upsell">Assinar o Clube Completo →</a>
+    <p style="color:rgba(255,255,255,.4);font-size:12px;margin-top:12px">7 dias de garantia · Sem fidelidade</p>
+  </div>
+</div>
+
+</body>
+</html>

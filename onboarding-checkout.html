@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santos da Fé – Comece sua jornada</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A84C;--gold-l:#E8D5A0;--gold-d:#8B6914;--navy:#0D1630;--deep:#1A2744;--mid:#2D3F6B;--cream:#FDF8EE;--parch:#F7F1E3;--ink:#1A1208;--muted:#6B5E3E;--green:#1A5C2A;--green-l:#A8E6BB}
+body{font-family:'Crimson Pro',serif;background:var(--navy);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.onboard{max-width:440px;width:100%;background:var(--cream);border-radius:32px;overflow:hidden}
+
+/* STEPS */
+.step-page{display:none;flex-direction:column}
+.step-page.active{display:flex}
+
+/* HEADER */
+.ob-header{background:var(--navy);padding:36px 28px 28px;text-align:center;position:relative}
+.ob-progress{display:flex;gap:6px;margin-bottom:20px;justify-content:center}
+.ob-dot{width:28px;height:4px;border-radius:2px;background:rgba(201,168,76,.2)}
+.ob-dot.done{background:var(--gold)}
+.ob-dot.cur{background:var(--gold-l)}
+.ob-cross{font-size:28px;margin-bottom:8px}
+.ob-title{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);letter-spacing:1px;margin-bottom:6px}
+.ob-sub{font-size:13px;color:rgba(255,255,255,.65);font-style:italic}
+
+/* BODY */
+.ob-body{padding:24px}
+.ob-label{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-d);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+
+/* CAUSA GRID */
+.causa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.causa-item{background:white;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;border:2px solid rgba(201,168,76,.15);transition:all .2s}
+.causa-item:hover,.causa-item.sel{border-color:var(--gold);background:var(--parch)}
+.causa-item.sel{background:linear-gradient(135deg,var(--parch),#FFF8E0)}
+.causa-em{font-size:28px;display:block;margin-bottom:6px}
+.causa-n{font-family:'Cinzel',serif;font-size:10px;color:var(--deep);letter-spacing:.3px;line-height:1.3}
+
+/* NOME INPUT */
+.ob-input{width:100%;padding:14px 16px;font-family:'Crimson Pro',serif;font-size:16px;color:var(--ink);background:white;border:1.5px solid rgba(201,168,76,.3);border-radius:14px;margin-bottom:16px;outline:none}
+.ob-input:focus{border-color:var(--gold)}
+.ob-input-label{font-family:'Cinzel',serif;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+
+/* PLANOS */
+.plans{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.plan-opt{border-radius:16px;padding:16px;cursor:pointer;border:2px solid rgba(201,168,76,.2);background:white;display:flex;align-items:center;gap:14px;transition:all .2s;position:relative}
+.plan-opt:hover,.plan-opt.sel{border-color:var(--gold)}
+.plan-opt.sel{background:var(--parch)}
+.plan-opt.featured{border-color:var(--gold);background:linear-gradient(135deg,#FFFDF5,#FFF8E0)}
+.plan-badge{position:absolute;top:-10px;right:16px;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;padding:3px 12px;border-radius:10px}
+.plan-icon{font-size:28px;flex-shrink:0}
+.plan-info{flex:1}
+.plan-name{font-family:'Cinzel',serif;font-size:14px;color:var(--deep);margin-bottom:2px}
+.plan-desc{font-size:12px;color:var(--muted);font-style:italic}
+.plan-price{text-align:right;flex-shrink:0}
+.plan-val{font-family:'Cinzel',serif;font-size:18px;color:var(--deep);font-weight:600}
+.plan-per{font-size:11px;color:var(--muted)}
+.plan-radio{width:18px;height:18px;border-radius:50%;border:2px solid rgba(201,168,76,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.plan-opt.sel .plan-radio{background:var(--gold);border-color:var(--gold)}
+.plan-opt.sel .plan-radio::after{content:'✓';color:white;font-size:11px;font-weight:700}
+
+/* PAGAMENTO */
+.pay-methods{display:flex;gap:8px;margin-bottom:16px}
+.pay-m{flex:1;background:white;border:1.5px solid rgba(201,168,76,.2);border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;color:var(--muted);letter-spacing:.5px;transition:all .2s}
+.pay-m:hover,.pay-m.sel{border-color:var(--gold);color:var(--gold-d);background:var(--parch)}
+.pay-m-icon{font-size:20px;display:block;margin-bottom:4px}
+.card-fields{background:white;border-radius:14px;padding:16px;border:1px solid rgba(201,168,76,.15);margin-bottom:16px}
+.pix-box{background:var(--parch);border-radius:14px;padding:20px;text-align:center;margin-bottom:16px;border:1px solid rgba(201,168,76,.2)}
+.pix-qr{width:120px;height:120px;background:white;border-radius:10px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:40px;border:1px solid rgba(201,168,76,.2)}
+.pix-code{font-size:11px;color:var(--muted);word-break:break-all;font-family:monospace;background:white;padding:8px;border-radius:8px;margin-bottom:10px}
+.pix-copy-btn{background:var(--deep);color:var(--gold);font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;padding:8px 20px;border:none;border-radius:20px;cursor:pointer}
+
+/* BOTÃO */
+.ob-btn{width:100%;padding:16px;font-family:'Cinzel',serif;font-size:14px;letter-spacing:2px;border:none;border-radius:16px;cursor:pointer;transition:all .2s;margin-top:8px}
+.ob-btn-primary{background:var(--gold);color:var(--navy)}
+.ob-btn-primary:hover{background:var(--gold-l)}
+.ob-btn-secondary{background:transparent;color:var(--muted);font-size:13px;letter-spacing:1px;margin-top:6px}
+.ob-btn-secondary:hover{color:var(--gold-d)}
+
+/* SUCESSO */
+.success-screen{padding:40px 28px;text-align:center}
+.success-cross{font-size:52px;margin-bottom:16px;animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(201,168,76,.3))}50%{filter:drop-shadow(0 0 20px rgba(201,168,76,.6))}}
+.success-title{font-family:'Cinzel',serif;font-size:24px;color:var(--deep);margin-bottom:8px}
+.success-sub{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:24px;font-style:italic}
+.success-card{background:var(--parch);border-radius:18px;padding:20px;margin-bottom:20px;border:1px solid rgba(201,168,76,.25)}
+.success-saint{font-family:'Cinzel',serif;font-size:16px;color:var(--deep);margin-bottom:6px}
+.success-prayer{font-size:14px;font-style:italic;color:var(--muted);line-height:1.7;border-left:3px solid var(--gold);padding-left:14px;margin-top:10px}
+.sc-day{display:inline-block;background:var(--deep);color:var(--gold);font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;padding:4px 14px;border-radius:16px;margin-bottom:12px}
+
+/* SUMÁRIO PEDIDO */
+.order-summary{background:white;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid rgba(201,168,76,.15)}
+.order-row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid rgba(201,168,76,.08);color:var(--ink)}
+.order-row:last-child{border:none;font-family:'Cinzel',serif;color:var(--deep);font-size:15px}
+.order-row:last-child span:last-child{color:var(--gold-d)}
+.garantia-note{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* BACK */
+.back-link{display:flex;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:11px;color:rgba(201,168,76,.6);cursor:pointer;margin-bottom:4px;background:none;border:none;padding:0}
+.back-link:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="onboard" id="onboard">
+
+  <!-- STEP 1: CAUSA -->
+  <div class="step-page active" id="step1">
+    <div class="ob-header">
+      <div class="ob-progress">
+        <div class="ob-dot cur"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+      </div>
+      <div class="ob-cross">✝</div>
+      <div class="ob-title">Santos da Fé</div>
+      <div class="ob-sub">Qual causa move o seu coração hoje?</div>
+    </div>
+    <div class="ob-body">
+      <div class="ob-label">Escolha sua jornada</div>
+      <div class="causa-grid">
+        <div class="causa-item" onclick="selectCausa(this,'São José','💰','Prosperidade e Trabalho')">
+          <span class="causa-em">💰</span><div class="causa-n">Prosperidade e Trabalho</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'Santa Rita','❤️','Amor e Família')">
+          <span class="causa-em">❤️</span><div class="causa-n">Amor e Família</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'São Judas Tadeu','🙏','Causas Impossíveis')">
+          <span class="causa-em">🙏</span><div class="causa-n">Causas Impossíveis</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'São Peregrino','🏥','Saúde e Cura')">
+          <span class="causa-em">🏥</span><div class="causa-n">Saúde e Cura</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'São Bento','🛡️','Proteção')">
+          <span class="causa-em">🛡️</span><div class="causa-n">Proteção Espiritual</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'Santo Tomás','📚','Estudos')">
+          <span class="causa-em">📚</span><div class="causa-n">Estudos e Concursos</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'Santa Gianna','👶','Filhos e Maternidade')">
+          <span class="causa-em">👶</span><div class="causa-n">Filhos e Maternidade</div>
+        </div>
+        <div class="causa-item" onclick="selectCausa(this,'IA','✨','Conselheiro Espiritual')">
+          <span class="causa-em">✨</span><div class="causa-n">Conselheiro IA</div>
+        </div>
+      </div>
+      <button class="ob-btn ob-btn-primary" id="btn-step1" onclick="goStep(2)" disabled style="opacity:.5">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: NOME -->
+  <div class="step-page" id="step2">
+    <div class="ob-header">
+      <div class="ob-progress">
+        <div class="ob-dot done"></div><div class="ob-dot cur"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+      </div>
+      <button class="back-link" onclick="goStep(1)">← Voltar</button>
+      <div class="ob-cross" id="step2-em">💰</div>
+      <div class="ob-title" id="step2-title">Novena de São José</div>
+      <div class="ob-sub">Vamos personalizar sua jornada</div>
+    </div>
+    <div class="ob-body">
+      <label class="ob-input-label" for="nome">Seu nome</label>
+      <input class="ob-input" type="text" id="nome" placeholder="Como posso te chamar?" oninput="validateStep2()">
+      <label class="ob-input-label" for="email">Seu e-mail</label>
+      <input class="ob-input" type="email" id="email" placeholder="seu@email.com" oninput="validateStep2()">
+      <label class="ob-input-label" for="intencao">Sua intenção (opcional)</label>
+      <textarea class="ob-input" id="intencao" rows="3" placeholder="O que você está pedindo a Deus? (fica só entre você e o Céu)" style="resize:none;height:80px"></textarea>
+      <button class="ob-btn ob-btn-primary" id="btn-step2" onclick="goStep(3)" disabled style="opacity:.5">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: PLANO -->
+  <div class="step-page" id="step3">
+    <div class="ob-header">
+      <div class="ob-progress">
+        <div class="ob-dot done"></div><div class="ob-dot done"></div><div class="ob-dot cur"></div><div class="ob-dot"></div>
+      </div>
+      <button class="back-link" onclick="goStep(2)">← Voltar</button>
+      <div class="ob-cross">🕊️</div>
+      <div class="ob-title">Escolha seu plano</div>
+      <div class="ob-sub">Comece hoje, cancele quando quiser</div>
+    </div>
+    <div class="ob-body">
+      <div class="ob-label">Planos disponíveis</div>
+      <div class="plans">
+        <div class="plan-opt" id="plan-single" onclick="selectPlan('single','R$9,90','Novena Individual')">
+          <div class="plan-radio"></div>
+          <div class="plan-icon">📖</div>
+          <div class="plan-info">
+            <div class="plan-name">Novena Individual</div>
+            <div class="plan-desc">9 dias · Acesso vitalício</div>
+          </div>
+          <div class="plan-price"><div class="plan-val">R$9,90</div><div class="plan-per">único</div></div>
+        </div>
+        <div class="plan-opt featured sel" id="plan-clube" onclick="selectPlan('clube','R$14,90/mês','Clube Santos da Fé')">
+          <div class="plan-badge">⭐ Mais Popular</div>
+          <div class="plan-radio"></div>
+          <div class="plan-icon">🕊️</div>
+          <div class="plan-info">
+            <div class="plan-name">Clube Santos da Fé</div>
+            <div class="plan-desc">7 novenas + IA + Comunidade</div>
+          </div>
+          <div class="plan-price"><div class="plan-val">R$14,90</div><div class="plan-per">/mês</div></div>
+        </div>
+        <div class="plan-opt" id="plan-anual" onclick="selectPlan('anual','R$9,90/mês','Clube Anual')">
+          <div class="plan-radio"></div>
+          <div class="plan-icon">👑</div>
+          <div class="plan-info">
+            <div class="plan-name">Clube Anual</div>
+            <div class="plan-desc">2 meses grátis · Melhor custo</div>
+          </div>
+          <div class="plan-price"><div class="plan-val">R$9,90</div><div class="plan-per">/mês</div></div>
+        </div>
+      </div>
+      <div class="garantia-note">🛡️ Garantia de 7 dias. Se não transformar sua vida espiritual, devolvemos tudo.</div>
+      <button class="ob-btn ob-btn-primary" onclick="goStep(4)">Ir para pagamento →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PAGAMENTO -->
+  <div class="step-page" id="step4">
+    <div class="ob-header">
+      <div class="ob-progress">
+        <div class="ob-dot done"></div><div class="ob-dot done"></div><div class="ob-dot done"></div><div class="ob-dot cur"></div>
+      </div>
+      <button class="back-link" onclick="goStep(3)">← Voltar</button>
+      <div class="ob-cross">💳</div>
+      <div class="ob-title">Pagamento seguro</div>
+      <div class="ob-sub">Seus dados são protegidos com criptografia</div>
+    </div>
+    <div class="ob-body">
+      <div class="order-summary">
+        <div class="order-row"><span id="summ-nome">Olá, Devoto</span><span></span></div>
+        <div class="order-row"><span id="summ-causa">Novena de São José</span><span></span></div>
+        <div class="order-row"><span id="summ-plano">Clube Santos da Fé</span><span id="summ-preco">R$14,90/mês</span></div>
+      </div>
+      <div class="ob-label">Forma de pagamento</div>
+      <div class="pay-methods">
+        <div class="pay-m sel" id="pay-pix" onclick="selectPay('pix')"><span class="pay-m-icon">📱</span>PIX</div>
+        <div class="pay-m" id="pay-card" onclick="selectPay('card')"><span class="pay-m-icon">💳</span>Cartão</div>
+        <div class="pay-m" id="pay-boleto" onclick="selectPay('boleto')"><span class="pay-m-icon">📄</span>Boleto</div>
+      </div>
+
+      <div id="pix-area">
+        <div class="pix-box">
+          <div class="pix-qr">📱</div>
+          <p style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold-d);margin-bottom:8px;letter-spacing:.5px">Escaneie o QR Code</p>
+          <div class="pix-code">00020126580014br.gov.bcb.pix0136a629532e-7693-4846-b028-f142...</div>
+          <button class="pix-copy-btn" onclick="copyPix()">Copiar código PIX</button>
+        </div>
+        <p style="font-size:12px;color:var(--muted);text-align:center;font-style:italic">Após o pagamento, sua jornada começa automaticamente em segundos.</p>
+      </div>
+
+      <div id="card-area" style="display:none">
+        <div class="card-fields">
+          <label class="ob-input-label" style="margin-bottom:6px;display:block">Número do cartão</label>
+          <input class="ob-input" style="margin-bottom:10px" placeholder="0000 0000 0000 0000">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><label class="ob-input-label" style="display:block;margin-bottom:6px">Validade</label><input class="ob-input" style="margin:0" placeholder="MM/AA"></div>
+            <div><label class="ob-input-label" style="display:block;margin-bottom:6px">CVV</label><input class="ob-input" style="margin:0" placeholder="123"></div>
+          </div>
+          <label class="ob-input-label" style="margin:10px 0 6px;display:block">Nome no cartão</label>
+          <input class="ob-input" style="margin:0" placeholder="NOME COMPLETO">
+        </div>
+        <button class="ob-btn ob-btn-primary" onclick="processPayment()">Confirmar Pagamento →</button>
+      </div>
+
+      <div id="boleto-area" style="display:none;text-align:center;padding:20px 0">
+        <p style="font-size:14px;color:var(--muted);margin-bottom:16px;font-style:italic">Seu boleto será gerado e enviado para o e-mail cadastrado. Válido por 3 dias úteis.</p>
+        <button class="ob-btn ob-btn-primary" onclick="processPayment()">Gerar Boleto →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 5: SUCESSO -->
+  <div class="step-page" id="step5">
+    <div class="success-screen">
+      <div class="success-cross">✝</div>
+      <h2 class="success-title">Sua jornada começa agora</h2>
+      <p class="success-sub">Bem-vindo(a) ao Santos da Fé, <span id="success-nome">devoto</span>. Sua novena está pronta para começar.</p>
+      <div class="success-card">
+        <div class="sc-day">Dia 1 de 9</div>
+        <div class="success-saint" id="success-saint">💰 Novena de São José</div>
+        <p style="font-size:13px;color:var(--muted);margin:4px 0 10px;font-style:italic">Patrono dos trabalhadores e famílias</p>
+        <div class="success-prayer">"Glorioso São José, pai nutridor da Sagrada Família, volto a vós neste primeiro dia de novena com o peso das minhas necessidades no coração..."</div>
+      </div>
+      <button class="ob-btn ob-btn-primary" onclick="alert('Abrindo o app...')">Começar minha Novena agora →</button>
+      <p style="font-size:12px;color:var(--muted);margin-top:16px;font-style:italic">Confirmação enviada para seu e-mail · Suporte: contato@santosdasfe.com.br</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let selectedCausa = null, selectedPlan = 'clube', selectedPay = 'pix';
+
+function selectCausa(el, saint, em, name){
+  document.querySelectorAll('.causa-item').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedCausa = {saint, em, name};
+  const btn = document.getElementById('btn-step1');
+  btn.disabled = false; btn.style.opacity = '1';
+}
+function goStep(n){
+  document.querySelectorAll('.step-page').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  if(n===2 && selectedCausa){
+    document.getElementById('step2-em').textContent = selectedCausa.em;
+    document.getElementById('step2-title').textContent = 'Novena de '+selectedCausa.saint;
+  }
+  if(n===4){
+    const nm = document.getElementById('nome').value || 'Devoto';
+    document.getElementById('summ-nome').textContent = 'Olá, '+nm+' 🙏';
+    document.getElementById('summ-causa').textContent = selectedCausa ? (selectedCausa.em+' '+selectedCausa.name) : 'Jornada Espiritual';
+  }
+}
+function validateStep2(){
+  const nm = document.getElementById('nome').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const btn = document.getElementById('btn-step2');
+  const valid = nm.length >= 2 && em.includes('@');
+  btn.disabled = !valid; btn.style.opacity = valid?'1':'.5';
+}
+function selectPlan(id, price, name){
+  ['plan-single','plan-clube','plan-anual'].forEach(p=>document.getElementById(p).classList.remove('sel'));
+  document.getElementById('plan-'+id).classList.add('sel');
+  selectedPlan = id;
+  document.getElementById('summ-plano').textContent = name;
+  document.getElementById('summ-preco').textContent = price;
+}
+function selectPay(p){
+  ['pix','card','boleto'].forEach(x=>document.getElementById('pay-'+x).classList.remove('sel'));
+  document.getElementById('pay-'+p).classList.add('sel');
+  document.getElementById('pix-area').style.display = p==='pix'?'block':'none';
+  document.getElementById('card-area').style.display = p==='card'?'block':'none';
+  document.getElementById('boleto-area').style.display = p==='boleto'?'block':'none';
+}
+function copyPix(){alert('Código PIX copiado! ✓')}
+function processPayment(){
+  const nm = document.getElementById('nome').value || 'devoto';
+  document.getElementById('success-nome').textContent = nm;
+  if(selectedCausa){
+    document.getElementById('success-saint').textContent = selectedCausa.em+' Novena de '+selectedCausa.saint;
+  }
+  goStep(5);
+}
+</script>
+</body>
+</html>

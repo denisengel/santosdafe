@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santos da Fé – Um santo para cada causa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;--gold-l:#E8D5A0;--gold-d:#8B6914;--gold-pale:#FDF8E8;
+  --navy:#0D1630;--deep:#1A2744;--mid:#2D3F6B;
+  --cream:#FDF8EE;--parch:#F7F1E3;--ink:#1A1208;--muted:#6B5E3E;
+  --white:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Crimson Pro',serif;background:var(--cream);color:var(--ink);line-height:1.6}
+
+/* HERO */
+.hero{background:var(--navy);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.18) 0%,transparent 60%)}
+.hero-cross{font-size:48px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(201,168,76,.4))}
+.hero-badge{display:inline-block;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold-l);font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:6px 20px;border-radius:20px;margin-bottom:20px}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:var(--gold);letter-spacing:3px;line-height:1.1;margin-bottom:16px;text-shadow:0 2px 30px rgba(201,168,76,.3)}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);color:rgba(255,255,255,.75);max-width:600px;margin:0 auto 16px;font-style:italic;line-height:1.6}
+.hero-slogan{font-family:'Cinzel',serif;font-size:14px;color:var(--gold-l);letter-spacing:1.5px;margin-bottom:40px;opacity:.85}
+.hero-cta-group{display:flex;flex-direction:column;align-items:center;gap:14px}
+.btn-primary{background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:16px;font-weight:600;letter-spacing:2px;padding:18px 48px;border:none;border-radius:50px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--gold-l);font-family:'Cinzel',serif;font-size:13px;letter-spacing:1.5px;padding:12px 32px;border:1px solid rgba(201,168,76,.4);border-radius:50px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-secondary:hover{background:rgba(201,168,76,.1)}
+.hero-price{color:rgba(255,255,255,.5);font-size:13px;margin-top:8px}
+.hero-scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(201,168,76,.4);font-size:24px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* SOCIAL PROOF */
+.proof-bar{background:var(--deep);padding:16px 24px;text-align:center}
+.proof-bar p{color:var(--gold-l);font-size:14px;letter-spacing:.5px}
+.proof-bar strong{color:var(--gold)}
+
+/* SECTION COMUM */
+.section{padding:80px 24px}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-d);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:12px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(26px,4vw,42px);color:var(--deep);text-align:center;line-height:1.2;margin-bottom:16px}
+.section-desc{font-size:18px;color:var(--muted);text-align:center;max-width:640px;margin:0 auto 52px;line-height:1.7;font-style:italic}
+.section-dark{background:var(--deep);color:white}
+.section-dark .section-title{color:var(--gold)}
+.section-dark .section-desc{color:rgba(255,255,255,.65)}
+.section-dark .section-tag{color:var(--gold-l)}
+
+/* JORNADAS */
+.jornadas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.jornada-card{background:var(--white);border-radius:20px;padding:28px 22px;border:1.5px solid rgba(201,168,76,.2);transition:all .25s;cursor:default}
+.jornada-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 40px rgba(201,168,76,.15)}
+.jornada-emoji{font-size:36px;margin-bottom:14px;display:block}
+.jornada-title{font-family:'Cinzel',serif;font-size:16px;color:var(--deep);margin-bottom:6px}
+.jornada-saint{font-size:13px;color:var(--gold-d);font-style:italic;margin-bottom:12px}
+.jornada-desc{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* COMO FUNCIONA */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px}
+.step{text-align:center}
+.step-num{width:52px;height:52px;border-radius:50%;background:rgba(201,168,76,.15);border:1.5px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:20px;color:var(--gold);margin:0 auto 16px}
+.step-title{font-family:'Cinzel',serif;font-size:16px;color:var(--gold-l);margin-bottom:8px}
+.step-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.6}
+
+/* NOVENA PREVIEW */
+.novena-preview{background:var(--parch);border-radius:24px;padding:36px;border:1px solid rgba(201,168,76,.25);max-width:680px;margin:0 auto}
+.novena-day-badge{display:inline-block;background:var(--deep);color:var(--gold);font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:6px 16px;border-radius:20px;margin-bottom:20px}
+.novena-title{font-family:'Cinzel',serif;font-size:22px;color:var(--deep);margin-bottom:8px}
+.novena-saint{font-style:italic;color:var(--muted);font-size:15px;margin-bottom:20px}
+.novena-section{margin-bottom:18px}
+.novena-section-label{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-d);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.novena-prayer{background:white;border-radius:12px;padding:16px;border-left:3px solid var(--gold);font-style:italic;font-size:15px;line-height:1.8;color:var(--ink)}
+.novena-texto{font-size:15px;color:var(--muted);line-height:1.7}
+
+/* DEPOIMENTOS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.testimonial{background:var(--white);border-radius:20px;padding:28px;border:1px solid rgba(201,168,76,.15)}
+.test-stars{color:var(--gold);font-size:16px;margin-bottom:12px}
+.test-text{font-size:15px;color:var(--ink);line-height:1.7;font-style:italic;margin-bottom:16px}
+.test-author{display:flex;align-items:center;gap:12px}
+.test-avatar{width:40px;height:40px;border-radius:50%;background:var(--mid);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;color:var(--gold)}
+.test-name{font-family:'Cinzel',serif;font-size:13px;color:var(--deep)}
+.test-city{font-size:12px;color:var(--muted)}
+
+/* PREÇOS */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:0 auto}
+.price-card{background:var(--white);border-radius:24px;padding:32px 28px;border:1.5px solid rgba(201,168,76,.2);text-align:center;position:relative}
+.price-card.featured{border:2px solid var(--gold);background:linear-gradient(135deg,#FFFDF5,var(--parch))}
+.price-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;padding:6px 20px;border-radius:20px;white-space:nowrap}
+.price-icon{font-size:36px;margin-bottom:14px;display:block}
+.price-name{font-family:'Cinzel',serif;font-size:18px;color:var(--deep);margin-bottom:6px}
+.price-desc{font-size:13px;color:var(--muted);margin-bottom:20px;font-style:italic}
+.price-value{font-family:'Cinzel',serif;font-size:42px;color:var(--deep);font-weight:700;line-height:1}
+.price-period{font-size:14px;color:var(--muted)}
+.price-old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-top:4px}
+.price-features{list-style:none;margin:24px 0;text-align:left}
+.price-features li{font-size:14px;color:var(--ink);padding:7px 0;border-bottom:1px solid rgba(201,168,76,.1);display:flex;gap:8px;align-items:flex-start}
+.price-features li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0}
+.price-cta{width:100%;padding:15px;background:var(--deep);color:var(--gold);font-family:'Cinzel',serif;font-size:14px;letter-spacing:2px;border:none;border-radius:14px;cursor:pointer;text-decoration:none;display:block;transition:all .2s}
+.price-cta:hover{background:var(--mid)}
+.price-card.featured .price-cta{background:var(--gold);color:var(--navy)}
+.price-card.featured .price-cta:hover{background:var(--gold-l)}
+
+/* GARANTIA */
+.garantia-box{background:var(--deep);border-radius:24px;padding:40px;text-align:center;max-width:700px;margin:0 auto;border:1px solid rgba(201,168,76,.3)}
+.garantia-icon{font-size:48px;margin-bottom:16px}
+.garantia-title{font-family:'Cinzel',serif;font-size:24px;color:var(--gold);margin-bottom:12px}
+.garantia-text{font-size:16px;color:rgba(255,255,255,.75);line-height:1.7}
+
+/* FAQ */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{background:var(--white);border-radius:16px;margin-bottom:12px;border:1px solid rgba(201,168,76,.15);overflow:hidden}
+.faq-q{padding:20px 24px;font-family:'Cinzel',serif;font-size:15px;color:var(--deep);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q:hover{background:var(--gold-pale)}
+.faq-arrow{font-size:18px;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{padding:0 24px;max-height:0;overflow:hidden;transition:all .3s;font-size:15px;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{padding:0 24px 20px;max-height:300px}
+
+/* AFILIADOS */
+.afiliado-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.afiliado-card{background:rgba(255,255,255,.07);border-radius:20px;padding:24px;border:1px solid rgba(201,168,76,.2);text-align:center}
+.afiliado-icon{font-size:32px;margin-bottom:12px;display:block}
+.afiliado-title{font-family:'Cinzel',serif;font-size:15px;color:var(--gold);margin-bottom:8px}
+.afiliado-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6}
+.afiliado-destaque{font-family:'Cinzel',serif;font-size:22px;color:var(--gold);margin-top:8px}
+
+/* CTA FINAL */
+.cta-final{background:var(--navy);padding:100px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.12) 0%,transparent 65%)}
+.cta-cross{font-size:52px;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(201,168,76,.4))}
+.cta-title{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,52px);color:var(--gold);margin-bottom:16px;letter-spacing:2px}
+.cta-sub{font-size:18px;color:rgba(255,255,255,.7);max-width:580px;margin:0 auto 40px;font-style:italic;line-height:1.6}
+
+/* FOOTER */
+footer{background:#07101F;padding:40px 24px;text-align:center}
+footer p{color:rgba(255,255,255,.35);font-size:13px;line-height:1.8}
+footer a{color:rgba(201,168,76,.6);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+/* STICKY CTA */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid rgba(201,168,76,.3);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;transform:translateY(100%);transition:transform .3s}
+.sticky-cta.show{transform:translateY(0)}
+.sticky-cta-text{color:rgba(255,255,255,.8);font-size:13px}
+.sticky-cta-text strong{color:var(--gold);font-family:'Cinzel',serif}
+.sticky-cta a{background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;padding:10px 24px;border-radius:30px;text-decoration:none;white-space:nowrap}
+
+@media(max-width:600px){
+  .hero-cta-group{width:100%}
+  .btn-primary,.btn-secondary{width:100%;text-align:center}
+  .sticky-cta-text{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-cross">✝</div>
+  <div class="hero-badge">Novo · Aplicativo de Espiritualidade Católica</div>
+  <h1 class="hero-title">Santos da Fé</h1>
+  <p class="hero-sub">7 jornadas espirituais guiadas pelos maiores santos da Igreja, com novenas completas, orações diárias e inteligência artificial para orientação personalizada.</p>
+  <p class="hero-slogan">"Um santo para cada causa, uma oração para cada momento."</p>
+  <div class="hero-cta-group">
+    <a href="#precos" class="btn-primary">Começar minha Jornada Espiritual</a>
+    <a href="#como-funciona" class="btn-secondary">Como funciona?</a>
+    <p class="hero-price">A partir de R$14,90/mês · Cancele quando quiser</p>
+  </div>
+  <div class="hero-scroll">↓</div>
+</section>
+
+<!-- PROVA SOCIAL -->
+<div class="proof-bar">
+  <p>⭐⭐⭐⭐⭐ &nbsp; Mais de <strong>12.400 devotos</strong> já iniciaram sua jornada espiritual &nbsp; · &nbsp; <strong>47.800 novenas</strong> completadas</p>
+</div>
+
+<!-- JORNADAS -->
+<section class="section" id="jornadas">
+  <div class="section-inner">
+    <p class="section-tag">7 Jornadas Espirituais</p>
+    <h2 class="section-title">Qual causa move seu coração?</h2>
+    <p class="section-desc">Cada jornada é uma novena digital de 9 dias, com história do santo, oração diária, propósito prático e reflexão — tudo personalizado para sua necessidade.</p>
+    <div class="jornadas-grid">
+      <div class="jornada-card">
+        <span class="jornada-emoji">💰</span>
+        <div class="jornada-title">Prosperidade e Trabalho</div>
+        <div class="jornada-saint">São José · Patrono dos trabalhadores</div>
+        <div class="jornada-desc">Para quem busca emprego digno, prosperidade nos negócios e provisão para a família.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">❤️</span>
+        <div class="jornada-title">Amor e Família</div>
+        <div class="jornada-saint">Santa Rita de Cássia · Padroeira dos lares</div>
+        <div class="jornada-desc">Para casamentos em crise, reconciliações, cura de relacionamentos e paz no lar.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">🙏</span>
+        <div class="jornada-title">Causas Impossíveis</div>
+        <div class="jornada-saint">São Judas Tadeu · Apóstolo da esperança</div>
+        <div class="jornada-desc">Para situações sem saída humana, quando todas as portas parecem fechadas.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">🏥</span>
+        <div class="jornada-title">Saúde e Cura</div>
+        <div class="jornada-saint">São Peregrino · Patrono dos enfermos</div>
+        <div class="jornada-desc">Para doenças graves, tratamentos difíceis, cura física e espiritual.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">🛡️</span>
+        <div class="jornada-title">Proteção Espiritual</div>
+        <div class="jornada-saint">São Bento · Guardião contra o mal</div>
+        <div class="jornada-desc">Para proteção da família, do lar e afastamento de influências negativas.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">📚</span>
+        <div class="jornada-title">Estudos e Concursos</div>
+        <div class="jornada-saint">Santo Tomás de Aquino · Doutor da Igreja</div>
+        <div class="jornada-desc">Para concursos públicos, vestibular, pós-graduação e desafios intelectuais.</div>
+      </div>
+      <div class="jornada-card">
+        <span class="jornada-emoji">👶</span>
+        <div class="jornada-title">Filhos e Maternidade</div>
+        <div class="jornada-saint">Santa Gianna · Patrona das mães</div>
+        <div class="jornada-desc">Para gravidez, fertilidade, proteção dos filhos e vocação materna.</div>
+      </div>
+      <div class="jornada-card" style="background:linear-gradient(135deg,var(--parch),#FFF8E0);border-color:rgba(201,168,76,.4)">
+        <span class="jornada-emoji">✨</span>
+        <div class="jornada-title">Conselheiro Espiritual IA</div>
+        <div class="jornada-saint">Inteligência Artificial · Personalizado</div>
+        <div class="jornada-desc">Converse em tempo real com a IA e receba orientação espiritual personalizada para qualquer situação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section section-dark" id="como-funciona">
+  <div class="section-inner">
+    <p class="section-tag">Simples e Poderoso</p>
+    <h2 class="section-title">Como funciona?</h2>
+    <p class="section-desc">Uma jornada espiritual estruturada para transformar sua vida em 9 dias.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Escolha sua Causa</div>
+        <div class="step-desc">Selecione a jornada que corresponde à sua necessidade — ou pergunte ao Conselheiro IA.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Reze Diariamente</div>
+        <div class="step-desc">Cada dia tem história do santo, oração, propósito prático e reflexão pessoal.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Acumule Méritos</div>
+        <div class="step-desc">Ganhe pontos, desbloqueie medalhas e acompanhe sua evolução espiritual.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Ore em Comunidade</div>
+        <div class="step-desc">Publique intenções, peça orações e reze pelos irmãos na rede comunitária.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-title">Receba Orientação IA</div>
+        <div class="step-desc">O Conselheiro Espiritual com IA sugere santos, orações e novenas personalizadas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW NOVENA -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-tag">Prévia do Conteúdo</p>
+    <h2 class="section-title">Veja como é uma novena</h2>
+    <p class="section-desc">Conteúdo profundo, orações autênticas e reflexões que transformam. Aqui está um exemplo real do Dia 1 da Novena de São José.</p>
+    <div class="novena-preview">
+      <div class="novena-day-badge">Dia 1 de 9 · Novena de São José</div>
+      <h3 class="novena-title">Prosperidade e Trabalho</h3>
+      <p class="novena-saint">Patrono dos trabalhadores, pais de família e da Igreja Universal</p>
+      <div class="novena-section">
+        <div class="novena-section-label">📖 História do Santo</div>
+        <p class="novena-texto">São José nasceu em Belém, da tribo de Judá, e tornou-se carpinteiro em Nazaré. Homem de poucas palavras nas Escrituras, mas de ações profundas: obedeceu a Deus em silêncio e soube proteger a Sagrada Família em momentos de perigo. Foi proclamado Patrono da Igreja Universal pelo Papa Pio IX em 1870.</p>
+      </div>
+      <div class="novena-section">
+        <div class="novena-section-label">🙏 Oração do Dia</div>
+        <div class="novena-prayer">Glorioso São José, pai nutridor da Sagrada Família, volto a vós neste primeiro dia de novena com o peso das minhas necessidades no coração. Vós que conhecestes as exigências do trabalho honesto e a responsabilidade de sustentar aqueles que amais, intercedei por mim junto ao Pai Eterno. Que meu trabalho seja digno, frutífero e abençoado. Amém.</div>
+      </div>
+      <div class="novena-section">
+        <div class="novena-section-label">🎯 Propósito Prático</div>
+        <p class="novena-texto">Hoje ao acordar, ofereça a Deus a primeira hora do seu dia. Antes de qualquer tarefa, diga: "São José, consagro este trabalho a vós."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section" style="background:var(--parch)">
+  <div class="section-inner">
+    <p class="section-tag">Testemunhos</p>
+    <h2 class="section-title">Graças alcançadas</h2>
+    <p class="section-desc">Histórias reais de devotos que transformaram sua vida através das novenas digitais.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"Fiz a novena de São José em março, sem emprego há 4 meses. No 7º dia recebi uma proposta inesperada. Coincidência? Eu chamo de graça."</p>
+        <div class="test-author">
+          <div class="test-avatar">MR</div>
+          <div><div class="test-name">Marcos Roberto</div><div class="test-city">São Paulo, SP</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"Meu casamento estava indo para o divórcio. A novena de Santa Rita me deu força para perdoar e meu marido voltou para casa no 9º dia. Impossível? Não para Santa Rita."</p>
+        <div class="test-author">
+          <div class="test-avatar">AF</div>
+          <div><div class="test-name">Ana Flávia</div><div class="test-city">Belo Horizonte, MG</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"Passei no concurso público depois de 3 reprovações. A novena de Santo Tomás foi a única coisa diferente que fiz. O conteúdo é simplesmente transformador."</p>
+        <div class="test-author">
+          <div class="test-avatar">LC</div>
+          <div><div class="test-name">Luciana Campos</div><div class="test-city">Brasília, DF</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"Meu pai estava com diagnóstico de câncer terminal. Fizemos a novena de São Peregrino em família. A biópsia seguinte mostrou redução do tumor. Os médicos ficaram sem explicação."</p>
+        <div class="test-author">
+          <div class="test-avatar">PS</div>
+          <div><div class="test-name">Patricia Silva</div><div class="test-city">Porto Alegre, RS</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"O Conselheiro IA me surpreendeu. Expliquei minha situação familiar complexa e ele indicou São Rafael — um santo que eu nunca conhecia. A oração sugerida me tocou profundamente."</p>
+        <div class="test-author">
+          <div class="test-avatar">JN</div>
+          <div><div class="test-name">João Neto</div><div class="test-city">Recife, PE</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">⭐⭐⭐⭐⭐</div>
+        <p class="test-text">"Tentava engravidar há 2 anos. Fiz a novena de Santa Gianna com muita fé. Hoje estou grávida de 5 meses. Não tenho palavras para a gratidão que sinto."</p>
+        <div class="test-author">
+          <div class="test-avatar">CE</div>
+          <div><div class="test-name">Carla Evangelista</div><div class="test-city">Campinas, SP</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section class="section" id="precos">
+  <div class="section-inner">
+    <p class="section-tag">Planos e Preços</p>
+    <h2 class="section-title">Invista na sua vida espiritual</h2>
+    <p class="section-desc">Comece com uma novena individual ou acesse tudo com o Clube Santos da Fé.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="price-icon">📖</span>
+        <div class="price-name">Novena Individual</div>
+        <div class="price-desc">Uma novena completa de 9 dias</div>
+        <div class="price-value">R$9,90</div>
+        <div class="price-period">pagamento único</div>
+        <ul class="price-features">
+          <li>1 novena completa (9 dias)</li>
+          <li>História, oração e propósito</li>
+          <li>Reflexões diárias</li>
+          <li>Diário de gratidão</li>
+          <li>Acesso vitalício à novena</li>
+        </ul>
+        <a href="#" class="price-cta">Escolher Novena</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">⭐ Mais Popular</div>
+        <span class="price-icon">🕊️</span>
+        <div class="price-name">Clube Santos da Fé</div>
+        <div class="price-desc">Acesso completo a tudo</div>
+        <div class="price-value">R$14,90</div>
+        <div class="price-period">/mês</div>
+        <div class="price-old">de R$24,90</div>
+        <ul class="price-features">
+          <li>Todas as 7 novenas completas</li>
+          <li>Conselheiro Espiritual IA ilimitado</li>
+          <li>Biblioteca com 500+ orações</li>
+          <li>Áudios e músicas sacras</li>
+          <li>Calendário litúrgico</li>
+          <li>Comunidade de oração</li>
+          <li>Gamificação e medalhas</li>
+          <li>Novenas novas todo mês</li>
+        </ul>
+        <a href="#" class="price-cta">Assinar Clube</a>
+      </div>
+      <div class="price-card">
+        <span class="price-icon">👑</span>
+        <div class="price-name">Clube Anual</div>
+        <div class="price-desc">Melhor custo-benefício</div>
+        <div class="price-value">R$9,90</div>
+        <div class="price-period">/mês (cobrado anual)</div>
+        <div class="price-old">Economize R$60/ano</div>
+        <ul class="price-features">
+          <li>Tudo do Clube mensal</li>
+          <li>2 meses grátis</li>
+          <li>Retiro espiritual digital exclusivo</li>
+          <li>Acesso antecipado a novenas</li>
+          <li>Badge exclusivo de assinante anual</li>
+        </ul>
+        <a href="#" class="price-cta">Assinar Anual</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="garantia-box">
+      <div class="garantia-icon">🛡️</div>
+      <h3 class="garantia-title">Garantia de 7 dias · Sem perguntas</h3>
+      <p class="garantia-text">Se em 7 dias você não sentir que o Santos da Fé está transformando sua vida espiritual, devolvemos 100% do seu dinheiro. Sem burocracia, sem questionamentos. Nossa missão é servir — e só queremos assinantes que estejam crescendo na fé.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AFILIADOS -->
+<section class="section section-dark" id="afiliados">
+  <div class="section-inner">
+    <p class="section-tag">Programa de Afiliados</p>
+    <h2 class="section-title">Ganhe rezando e indicando</h2>
+    <p class="section-desc">Compartilhe o Santos da Fé e ganhe comissões por cada assinante que você trouxer.</p>
+    <div class="afiliado-grid">
+      <div class="afiliado-card">
+        <span class="afiliado-icon">💰</span>
+        <div class="afiliado-title">Comissão por Venda</div>
+        <div class="afiliado-desc">Ganhe em cada novena individual ou assinatura indicada</div>
+        <div class="afiliado-destaque">Até 40%</div>
+      </div>
+      <div class="afiliado-card">
+        <span class="afiliado-icon">🔁</span>
+        <div class="afiliado-title">Recorrência</div>
+        <div class="afiliado-desc">Ganhe todo mês enquanto seu indicado mantiver a assinatura ativa</div>
+        <div class="afiliado-destaque">30% recorrente</div>
+      </div>
+      <div class="afiliado-card">
+        <span class="afiliado-icon">📊</span>
+        <div class="afiliado-title">Dashboard Completo</div>
+        <div class="afiliado-desc">Acompanhe cliques, conversões e comissões em tempo real</div>
+        <div class="afiliado-destaque">24/7 online</div>
+      </div>
+      <div class="afiliado-card">
+        <span class="afiliado-icon">🎯</span>
+        <div class="afiliado-title">Materiais Prontos</div>
+        <div class="afiliado-desc">Criativos, textos e vídeos prontos para divulgar nas redes sociais</div>
+        <div class="afiliado-destaque">Kit completo</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="#" class="btn-primary" style="display:inline-block">Quero ser Afiliado</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-tag">Dúvidas Frequentes</p>
+    <h2 class="section-title">Perguntas e respostas</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Preciso ser católico praticante para usar? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Não necessariamente. O Santos da Fé é desenvolvido dentro da tradição católica, mas qualquer pessoa que tenha devoção aos santos ou interesse em espiritualidade cristã pode se beneficiar. O conteúdo é respeitoso, profundo e acolhedor para todos.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">O Conselheiro IA é realmente com inteligência artificial? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Sim. O Conselheiro usa a API da Anthropic (Claude), um dos modelos de IA mais avançados do mundo, treinado especificamente para orientação espiritual católica dentro do app. As respostas são geradas em tempo real e personalizadas para sua situação.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Posso cancelar quando quiser? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Sim, a qualquer momento, sem multa ou burocracia. Basta acessar as configurações da sua conta e cancelar. Você continua com acesso até o fim do período pago.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">As novenas são aprovadas pela Igreja Católica? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">As novenas foram desenvolvidas com base na tradição devocional católica secular, respeitando a teologia e a história de cada santo. Não são textos de imprimatur, mas são fiéis ao espírito e à doutrina da Igreja.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">O app está disponível para iOS e Android? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Atualmente o Santos da Fé está disponível como aplicativo web (funciona em qualquer celular pelo navegador). Os apps nativos para iOS e Android estão em desenvolvimento e serão lançados em breve.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Novas novenas são adicionadas? <span class="faq-arrow">↓</span></div>
+        <div class="faq-a">Sim! Os assinantes do Clube Santos da Fé recebem novas novenas todo mês — novos santos, novas causas e conteúdos especiais para datas litúrgicas importantes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-cross">✝</div>
+  <h2 class="cta-title">Comece sua jornada hoje</h2>
+  <p class="cta-sub">Mais de 12.400 devotos já estão transformando sua vida espiritual. Qual causa move o seu coração?</p>
+  <a href="#precos" class="btn-primary" style="display:inline-block">Quero começar agora</a>
+  <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:16px">7 dias de garantia · Cancele quando quiser · Suporte em português</p>
+</section>
+
+<footer>
+  <p>
+    <strong style="color:rgba(255,255,255,.6);font-family:'Cinzel',serif">Santos da Fé</strong><br>
+    "Um santo para cada causa, uma oração para cada momento."<br><br>
+    <a href="#">Termos de Uso</a> · <a href="#">Privacidade</a> · <a href="#">Suporte</a> · <a href="#afiliados">Afiliados</a><br><br>
+    © 2025 Santos da Fé · Todos os direitos reservados
+  </p>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta-text">Clube Santos da Fé · <strong>R$14,90/mês</strong></div>
+  <a href="#precos">Assinar agora →</a>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const sc = document.getElementById('sticky-cta');
+  if(window.scrollY > 600) sc.classList.add('show');
+  else sc.classList.remove('show');
+});
+function toggleFaq(el){
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
